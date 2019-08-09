@@ -15,4 +15,8 @@
 // }).catch(error => console.error("Profession list endpoint: " + error));
 
 const moment = require("moment");
-console.log(moment("08-07-2019 8:00 PM", "MM-DD-YYYY h:mm a").format("MM-DD-YYYY h:mm a"));
+const date = "6,4,2055";
+console.log(moment(date, "MM-DD-YYYY").isValid());
+const time = "100";
+console.log(moment(time + " PM", "h:mm A").format());
+//console.log(moment("08-07-2019 8:00 PM", "MM-DD-YYYY h:mm a").format("MM-DD-YYYY h:mm a"));
