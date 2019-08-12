@@ -1,4 +1,4 @@
-// const axios = require("axios");
+const axios = require("axios");
 // axios.get("https://api.guildwars2.com/v2/professions").then(response => {
 //   const professionList = response.data;
 //   const requests = [];
@@ -13,6 +13,10 @@
 //     this.setState({ professionList, professions });
 //   }).catch(error => console.error("Individual professions endpoint: " + error));
 // }).catch(error => console.error("Profession list endpoint: " + error));
-
-const moment = require("moment");
-console.log(moment("08-07-2019 8:00 PM", "MM-DD-YYYY h:mm a").format("MM-DD-YYYY h:mm a"));
+//--------------------------
+// const moment = require("moment");
+// console.log(moment("08-07-2019 8:00 PM", "MM-DD-YYYY h:mm a").format("MM-DD-YYYY h:mm a"));
+//--------------------------
+axios.get("https://api.guildwars2.com/v2/skills?ids=all").then(response => {
+  console.log(response.data.find(skill => skill.name === "Fragmentation Shot"));
+})
