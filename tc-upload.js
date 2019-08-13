@@ -13,20 +13,27 @@ client.connect(err => {
     }
     axios.all(requestUrls).then(responses => {
       let bulkWriteOps = [];
-      responses.forEach(response => {
-        response.data.forEach(item => {
-          bulkWriteOps.push({ 
-            updateOne: {
-              filter: { id: item.id },
-              update: { $set: { item } },
-              upsert: true
-            }
-          });
-        });
-      });
-      collection.bulkWrite(bulkWriteOps)
-                .then(response => console.log("Bulk write complete"))
-                .catch(error => console.error(error));
+      let items = []
+      responses.forEach(response => items.concat(response.data));
+      // {"item.type": {$in: ["UpgradeComponent", "Armor", "Weapon", "Back", "Trinket"]}, "item.rarity": {$in: ["Exotic", "Ascended"]}}
+      // {"item.type": "Consumable", "item.level": 80, "item.details.type": {$in: ["Food", "Utility"]}}
+      console.log("Unfiltered: " + items.length);
+      console.log("Armor/Weapon: " + items.filter(item => item.type === "Armor" || item.type === "Weapon").length);
+      console.log("Upgrades: " + items.filter(item => item.type === "UpgradeComponent" && (item.rarity === "Exotic" || item.rarity === "Ascended")).length);
+
+      // items.forEach(item => {
+      //   bulkWriteOps.push({ 
+      //     updateOne: {
+      //       filter: { id: item.id },
+      //       update: { $set: { item } },
+      //       upsert: true
+      //     }
+      //   });
+      // });
+      // collection.bulkWrite(bulkWriteOps)
+      //           .then(response => console.log("Bulk write complete"))
+      //           .catch(error => console.error(error));
+
     }).catch(error => console.error(error));
   }).catch(error => console.error(error));
 });
