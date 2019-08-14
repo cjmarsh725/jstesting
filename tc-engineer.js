@@ -28,14 +28,13 @@ const analyzeEngineer = async () => {
     const skill = skills.find(skill => skill.name === name);
     const dmg = getDmg(skill);
     const condi = getCondi(skill);
-    return `Damage: ${dmg} | Condi: ${condi}`;
+    return `Damage: ${dmg}` + (condi > 0 ? ` | Condi: ${condi}` : "");
   };
-  console.log(getDmgOutput("Blowtorch"));
-  //console.log(skills.find(skill => skill.name === "Refraction Cutter"));
   const coreSkills = [ "Sun Edge", "Sun Ripper", "Gleam Saber", "Refraction Cutter", "Radiant Arc", "Blowtorch" ];
   coreSkills.forEach(skill => {
-    //console.log(skill + ": " + getDmg(skill) + " damage");
+    console.log(`${skill} - ` + getDmgOutput(skill));
   });
+  console.log(skills.find(skill => skill.name === "Refraction Cutter"));
 }
 
 analyzeEngineer();
