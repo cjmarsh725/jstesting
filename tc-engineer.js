@@ -12,12 +12,26 @@ const analyzeEngineer = async () => {
     ferocity: 1240, //232.6%
     cond_dmg: 26,
   }
-  const getMult = name => skills.find(skill => skill.name === name).facts.find(fact => fact.type === 'Damage').dmg_multiplier;
-  const getDmg = name => ((char.weapon * char.power * getMult(name)) / 2597);
-  const getBleeding = stacks => stacks * (0.06 * char.cond_dmg + 0.25 * 80 + 2);
-  const getBurning = stacks => stacks * (0.155 * char.cond_dmg + 1.55 * 80 + 7);
-  const getCondi = "TODO";
-  console.log(skills.find(skill => skill.name === "Refraction Cutter"));
+  const getMult = skill => skill.facts.find(fact => fact.type === 'Damage').dmg_multiplier;
+  const getDmg = skill => ((char.weapon * char.power * getMult(skill)) / 2597);
+  const getBleeding = (stacks, duration) => stacks * duration * (0.06 * char.cond_dmg + 0.25 * 80 + 2);
+  const getBurning = (stacks, duration) => stacks * duration * (0.155 * char.cond_dmg + 1.55 * 80 + 7);
+  const getCondi = skill => {
+    let totalCondi = 0;
+    let skillFact = skill.facts.find(fact => fact.status === "Bleeding");
+    if (skillFact) totalCondi += getBleeding(skillFact.apply_count, skillFact.duration);
+    skillFact = skill.facts.find(fact => fact.status === "Burning");
+    if (skillFact) totalCondi += getBurning(skillFact.apply_count, skillFact.duration);
+    return totalCondi;
+  };
+  const getDmgOutput = name => {
+    const skill = skills.find(skill => skill.name === name);
+    const dmg = getDmg(skill);
+    const condi = getCondi(skill);
+    return `Damage: ${dmg} | Condi: ${condi}`;
+  };
+  console.log(getDmgOutput("Blowtorch"));
+  //console.log(skills.find(skill => skill.name === "Refraction Cutter"));
   const coreSkills = [ "Sun Edge", "Sun Ripper", "Gleam Saber", "Refraction Cutter", "Radiant Arc", "Blowtorch" ];
   coreSkills.forEach(skill => {
     //console.log(skill + ": " + getDmg(skill) + " damage");
