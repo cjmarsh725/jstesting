@@ -17,6 +17,10 @@ const axios = require("axios");
 // const moment = require("moment");
 // console.log(moment("08-07-2019 8:00 PM", "MM-DD-YYYY h:mm a").format("MM-DD-YYYY h:mm a"));
 //--------------------------
-axios.get("https://api.guildwars2.com/v2/skills?ids=all").then(response => {
-  console.log(response.data.find(skill => skill.name === "Fragmentation Shot"));
-})
+// axios.get("https://api.guildwars2.com/v2/skills?ids=all").then(response => {
+//   console.log(response.data.find(skill => skill.name === "Fragmentation Shot"));
+// })
+const store = {};
+console.log(store["1"]);
+store["1"] = store["1"] + 1;
+console.log(store["1"]);
