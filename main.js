@@ -20,7 +20,8 @@ const axios = require("axios");
 // axios.get("https://api.guildwars2.com/v2/skills?ids=all").then(response => {
 //   console.log(response.data.find(skill => skill.name === "Fragmentation Shot"));
 // })
-const store = {};
-console.log(store["1"]);
-store["1"] = store["1"] + 1;
-console.log(store["1"]);
+const openers = new Set(["{", "[", "("]);
+const test = "[";
+const test2 = "Foo";
+console.log(openers.has(test));
+console.log(openers.has(test2));
